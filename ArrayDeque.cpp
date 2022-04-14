@@ -3,7 +3,7 @@
 //
 
 #include "ArrayDeque.h"
-
+#include <iostream>
 ArrayDeque::ArrayDeque() {
     arr = new int[2];
     size = 0;
@@ -18,13 +18,12 @@ void ArrayDeque::allocation() {
     int begin_p,end_p;
     begin_p=begin.getPosition()-arr;
     end_p=end.getPosition()-arr;
-    for (int i = begin_p;; ++i) {
-        copy[i] = arr[i%capacity];
-        if(i==end_p)
-            break;
+    for (int i = begin_p;i-begin_p<size; ++i) {
+        copy[i-begin_p] = arr[i%capacity];
     }
     begin = &copy[0];
     end = &copy[size-1];
+    arr=copy;
 }
 
 void ArrayDeque::push_back(int n) {

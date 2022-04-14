@@ -9,7 +9,6 @@ ArrayDeque::ArrayDeque() {
     size = 0;
     capacity = 2;
     begin = &arr[0];
-    *begin=0;
     end = &arr[0];
 }
 
@@ -19,56 +18,75 @@ void ArrayDeque::allocation() {
     int begin_p,end_p;
     begin_p=begin.getPosition()-arr;
     end_p=end.getPosition()-arr;
-    for (int i = begin_p; i!=end_p; ++i) {
+    for (int i = begin_p;; ++i) {
         copy[i] = arr[i%capacity];
+        if(i==end_p)
+            break;
     }
     begin = &copy[0];
-    end = &copy[size];
+    end = &copy[size-1];
 }
 
 void ArrayDeque::push_back(int n) {
  if(size+1>=capacity)
      allocation();
  size++;
- *end=n;
- int m=end.getPosition()-arr;
- if(m+1>=capacity)
-     end=QueueIterator(&arr[0]);
- else
-     end++;
+ if(size==1){
+     *end=n;
+ }
+ else {
+     int m = end.getPosition() - arr;
+     if (m + 1 >= capacity)
+         end = QueueIterator(&arr[0]);
+     else
+         end++;
+     *end=n;
+ }
 }
 
 void ArrayDeque::push_front(int n) {
     if(size+1>=capacity)
         allocation();
     size++;
-    int m=begin.getPosition()-arr;
-    if(size>1) {
-        if (m - 1 < 0)
-            begin = QueueIterator(&arr[capacity - 1]);
-        else
-            begin--;
+    if(size==1)
+    {
+        *begin=n;
     }
-    *begin=n;
+    else {
+        int m = begin.getPosition() - arr;
+            if (m - 1 < 0)
+                begin = QueueIterator(&arr[capacity - 1]);
+            else
+                begin--;
+        *begin = n;
+    }
 
 }
 
 void ArrayDeque::pop_back() {
+    if(size==0)
+        return;
 size--;
-    int m=end.getPosition()-arr;
-    if(m-1<0)
-        end=QueueIterator(&arr[capacity-1]);
-    else
-        end--;
+    if(size>0) {
+        int m = end.getPosition() - arr;
+        if (m - 1 < 0)
+            end = QueueIterator(&arr[capacity - 1]);
+        else
+            end--;
+    }
 }
 
 void ArrayDeque::pop_front() {
+    if(size==0)
+        return;
 size--;
-    int m=begin.getPosition()-arr;
-    if(m+1>=capacity)
-        begin=QueueIterator(&arr[0]);
-    else
-        begin++;
+    if(size>0) {
+        int m = begin.getPosition() - arr;
+        if (m + 1 >= capacity)
+            begin = QueueIterator(&arr[0]);
+        else
+            begin++;
+    }
 }
 
 int &ArrayDeque::front() {
@@ -76,12 +94,7 @@ int &ArrayDeque::front() {
 }
 
 int &ArrayDeque::back() {
-    int m=end.getPosition()-arr;
-    m--;
-    if(m<0)
-        return arr[capacity-1];
-    else
-        return arr[m];
+    return *end;
 }
 
 int ArrayDeque::size_() {

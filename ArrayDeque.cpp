@@ -23,6 +23,7 @@ void ArrayDeque::allocation() {
     }
     begin = &copy[0];
     end = &copy[size-1];
+    delete []arr;
     arr=copy;
 }
 

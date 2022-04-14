@@ -16,12 +16,14 @@ ArrayDeque::ArrayDeque() {
 void ArrayDeque::allocation() {
     capacity *= 2;
     int *copy = new int[capacity];
-    for (int i = 0; begin != end; ++i) {
-        copy[i] = *begin;
-        begin++;
+    int begin_p,end_p;
+    begin_p=begin.getPosition()-arr;
+    end_p=end.getPosition()-arr;
+    for (int i = begin_p; i!=end_p; ++i) {
+        copy[i] = arr[i%capacity];
     }
     begin = &copy[0];
-    end = &copy[size + 1];
+    end = &copy[size];
 }
 
 void ArrayDeque::push_back(int n) {

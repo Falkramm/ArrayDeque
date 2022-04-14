@@ -19,7 +19,7 @@ void ArrayDeque::allocation() {
     begin_p=begin.getPosition()-arr;
     end_p=end.getPosition()-arr;
     for (int i = begin_p;i-begin_p<size; ++i) {
-        copy[i-begin_p] = arr[i%capacity];
+        copy[i-begin_p] = arr[i%(capacity/2)];
     }
     begin = &copy[0];
     end = &copy[size-1];
@@ -32,6 +32,8 @@ void ArrayDeque::push_back(int n) {
      allocation();
  size++;
  if(size==1){
+     begin=&arr[0];
+     end=&arr[0];
      *end=n;
  }
  else {
@@ -50,6 +52,8 @@ void ArrayDeque::push_front(int n) {
     size++;
     if(size==1)
     {
+        begin=&arr[0];
+        end=&arr[0];
         *begin=n;
     }
     else {

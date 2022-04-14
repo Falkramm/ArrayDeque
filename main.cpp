@@ -3,11 +3,21 @@
 int main() {
 
 ArrayDeque arr;
-//4321
-arr.push_front(1);
-    arr.push_front(2);
-    arr.push_front(3);
-    arr.push_front(4);
-std::cout << arr.front();
+//1234
+//234
+//34
+//4
+arr.push_back(1);
+    arr.push_back(2);
+    arr.push_back(3);
+    arr.push_back(4);
+std::cout << arr.back();
+arr.pop_back();
+    std::cout << arr.back();
+    arr.pop_back();
+    std::cout << arr.back();
+    arr.pop_back();
+    std::cout << arr.back();
+
 
 }
